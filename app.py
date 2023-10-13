@@ -19,13 +19,13 @@ def main():
     )
 
     st.title("Please upload your resume")
-    pdf = st.file_uploader("",type=["pdf"], accept_multiple_files=True)
+    pdf = st.file_uploader("",type=["pdf"])
 
     submit=st.button("Upload to Database")
 
     if submit:
         with st.spinner('Uploading...'):
-            db.store_resumes(pdf)
+            db.store_resume(pdf)
             st.write("You have successfully uploaded your resume. Please choose a utility from the side panel next.")
     
     

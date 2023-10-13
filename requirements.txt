@@ -10,3 +10,4 @@ sentence_transformers
 st-pages
 pymongo
 pypdf
+python-docx

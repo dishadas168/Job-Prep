@@ -1,0 +1,68 @@
+import streamlit as st
+from database import Database
+import config
+from langchain.chains.llm import LLMChain
+from langchain.prompts import PromptTemplate
+from langchain.chains.combine_documents.stuff import StuffDocumentsChain
+from langchain.chat_models import ChatOpenAI
+from langchain.text_splitter import CharacterTextSplitter
+from langchain.docstore.document import Document
+from langchain.chains.summarize import load_summarize_chain
+import docx 
+from docx.shared import Pt 
+
+db = Database()
+
+def main():
+
+    st.title("Tailor your resume to fit a Job Description")
+    st.write("Please paste the job description below:")
+    job_desc = st.text_area("Job Description")
+    button = st.button("Generate tailored resume!")
+
+    if button:
+        with st.spinner('Generating resume...'):
+            resume_text = db.get_resume()
+
+            text_splitter = CharacterTextSplitter()
+            texts = text_splitter.split_text(job_desc)
+            docs = [Document(page_content=t) for t in texts]
+
+            # Define prompt
+            prompt_template = f"""
+            You are given my resume and a job description. Based on the details provided in the job description 
+            below, align my pertinent skills and experience with the specific language and requirements outlined in 
+            the job description to create a tailored resume. This approach should enhance the 
+            likelihood of being considered a strong candidate for the position. Do not write a cover letter. 
+            Also write about the particular modifications that were made to the resume.
+        
+            RESUME:
+            {resume_text["content"]}
+            """ + "\n\nJOB DESCRIPTION: \n\n{job_desc}"
+
+            prompt = PromptTemplate.from_template(prompt_template)
+
+            # Define LLM chain
+            llm = ChatOpenAI(openai_api_key=config.openai_api_key, temperature=0, model_name="gpt-3.5-turbo-16k")
+            llm_chain = LLMChain(llm=llm, prompt=prompt)
+
+            # Define StuffDocumentsChain
+            stuff_chain = StuffDocumentsChain(
+                llm_chain=llm_chain,
+                document_variable_name="job_desc"
+            )
+
+            output = stuff_chain.run(docs)
+
+            st.code(output,language = None)
+        
+        # Create an instance of a word document 
+        doc = docx.Document() 
+        doc.add_paragraph(output) 
+        doc.save('tailored_resume.docx')
+
+        with open('tailored_resume.docx', 'rb') as f:
+            st.download_button('Download as Docx', f, file_name='tailored_resume.docx')
+    
+if __name__ == '__main__':
+    main()
