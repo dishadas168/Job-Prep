@@ -9,6 +9,10 @@ class Database:
         self.client = pymongo.MongoClient(config.mongodb_uri)
         self.db = self.client["job-prep"]
         self.resume_collection = self.db["resumes"]
+        self.raw_jobs_collection = self.db["raw_jobs"]
+
+    def push_to_db(self, jsonlist):
+        self.raw_jobs_collection.insert_many(jsonlist)
 
     def check_if_resume_exists(self):
         if self.resume_collection.count_documents({"type": "resume"}) > 0:

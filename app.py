@@ -1,6 +1,14 @@
 import streamlit as st
 from st_pages import Page, show_pages, add_page_title
 from database import Database
+import sys
+import os
+
+current = os.path.dirname(os.path.realpath(__file__))
+sys.path.append(current)
+sys.path.append(current + "/etl")
+sys.path.append(current + "/pages")
+
 
 db = Database()
 
