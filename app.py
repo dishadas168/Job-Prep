@@ -12,6 +12,7 @@ sys.path.append(current + "/pages")
 db = Database()
 
 def main():
+    st.set_page_config(layout="wide")
 
     # Display Pages in the side bar
     show_pages(
@@ -24,7 +25,8 @@ def main():
         ]
     )
 
-    st.title("Please upload your resume")
+    st.title("Upload resume")
+    st.write("Please upload your resume in PDF format")
     pdf = st.file_uploader("",type=["pdf"])
 
     submit=st.button("Upload to Database")

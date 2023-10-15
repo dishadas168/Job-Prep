@@ -121,7 +121,7 @@ def process_data():
 
     resume = db.get_resume()
 
-    data = db.get_raw()[:5]
+    data = db.get_raw()
     data = modify_fields(data)
     data = extract_description(data)
     data = extract_salaries(data)

@@ -21,7 +21,15 @@ def main():
                     "salary_high", "description",
                     "job_url"),
         column_config={
-            "job_url": st.column_config.LinkColumn()
+            "applied": "Applied?",
+            "posted_date": "Date posted",
+            "job_title": "Job Title",
+            "job_location": "Location",
+            "company_name": "Company",
+            "salary_low": "Min. Salary",
+            "salary_high": "Max. Salary",
+            "description": st.column_config.TextColumn("Description", width="medium"),
+            "job_url": st.column_config.LinkColumn("Job URL", width="medium")
         }
     )
 

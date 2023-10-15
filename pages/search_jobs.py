@@ -23,15 +23,21 @@ def main():
         save_progress = st.button('Save Progress')
 
     if extract:
-        extract_data(positions, location)
-        process_data()
+        with st.spinner('Extracting data from LinkedIn...'):
+            extract_data(positions, location)
+            process_data()
+            st.write('Extracted data successfully!')
     
     if display:
-        df = db.get_processed()
-        st.session_state['df'] = df
+        with st.spinner('Fetching data...'):
+            df = db.get_processed()
+            st.write(len(df))
+            st.session_state['df'] = df
 
     if save_progress:
-        db.update(st.session_state['df'])
+        with st.spinner('Saving...'):
+            db.update(st.session_state['df'])
+            st.write("Progress saved successfully!")
     
     if 'df' in st.session_state:
         edited_df = st.data_editor(st.session_state['df'],
@@ -41,7 +47,15 @@ def main():
                         "salary_high", "description",
                         "job_url"),
             column_config={
-                        "job_url": st.column_config.LinkColumn()
+                        "applied": "Applied?",
+                        "posted_date": "Date posted",
+                        "job_title": "Job Title",
+                        "job_location": "Location",
+                        "company_name": "Company",
+                        "salary_low": "Min. Salary",
+                        "salary_high": "Max. Salary",
+                        "description": st.column_config.TextColumn("Description", width="medium"),
+                        "job_url": st.column_config.LinkColumn("Job URL", width="medium")
             }
         )
 
