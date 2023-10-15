@@ -1,5 +1,8 @@
 name: Dockerize Job-Prep application
-on: push
+on: 
+  push:
+    branches:
+      - main
 jobs:
   build-container:
     name: Build Docker container image
