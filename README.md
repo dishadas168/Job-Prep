@@ -3,12 +3,14 @@
 
 ## Overview
 
-This Job Preparation Application is designed to streamline the job search and application process by integrating various tools and technologies. It offers six distinct sections to help users manage their job search effectively.
+This Job Preparation Application is designed to streamline the job search and application process. It offers six distinct sections to help users manage their job search effectively.
 
 ## Features
 
 
-https://github.com/dishadas168/Job-Prep/assets/44092220/79d378db-b405-4426-8d90-929f05b7df84
+
+https://github.com/dishadas168/Job-Prep/assets/44092220/e93208a9-67cb-47d3-8444-8971478db757
+
 
 
 ### 1. Upload Resume
@@ -28,12 +30,10 @@ In the "Generate Cover Letter" section, users can create a customized cover lett
 
 ## Technologies Used
 
-- **UI & Display:** Streamlit
-- **Programming Language:** Python
+- **UI:** Streamlit
 - **Database:** MongoDB Atlas
 - **LinkedIn API:** RapidAPI
 - **Text Generation:** OpenAI, Langchain
-- **Containerization:** Docker
 
 ## Getting Started
 
