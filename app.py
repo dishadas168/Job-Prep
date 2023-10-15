@@ -18,7 +18,6 @@ def main():
         [
             Page("app.py", "Upload Resume"),
             Page("pages/search_jobs.py", "Search Jobs"),
-            Page("pages/dashboard.py", "Dashboard"),
             Page("pages/generate_resume.py", "Generate Resume"),
             Page("pages/generate_cover_letter.py", "Generate Cover Letter"),
             Page("pages/applications.py", "Applications")

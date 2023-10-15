@@ -16,9 +16,9 @@ db = Database()
 
 def main():
 
-    st.title("Generate a Cover Letter for a Job Description")
-    st.write("Please paste the job description below:")
-    job_desc = st.text_area("Job Description")
+    st.title("Generate Cover Letter")
+    st.write("Paste a job description below along with optional details to get a cover letter fit for this position.")
+    job_desc = st.text_area("")
     extra_info = st.text_area("Optional background information")
     button = st.button("Generate cover letter!")
 

@@ -16,9 +16,9 @@ db = Database()
 
 def main():
 
-    st.title("Tailor your resume to fit a Job Description")
-    st.write("Please paste the job description below:")
-    job_desc = st.text_area("Job Description")
+    st.title("Tailor Resume")
+    st.write("Paste a job description below to get a resume tailored to the needs of the position.")
+    job_desc = st.text_area("")
     button = st.button("Generate tailored resume!")
 
     if button:

@@ -12,16 +12,26 @@ def main():
     positions = st.text_input("Enter comma separated position titles")
     location = st.text_input("Enter location")
 
-    extract = st.button("Extract data")
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        extract = st.button('Extract data')
+
+    with col2:
+        display = st.button('Display results')
+
+    with col3:
+        save_progress = st.button('Save Progress')
+
     if extract:
         extract_data(positions, location)
         process_data()
     
-    display = st.button("Display results")
     if display:
         df = db.get_processed()
         st.session_state['df'] = df
 
+    if save_progress:
+        db.update(st.session_state['df'])
     
     if 'df' in st.session_state:
         edited_df = st.data_editor(st.session_state['df'],
@@ -37,10 +47,6 @@ def main():
 
         for i in range(len(edited_df)):
             st.session_state["df"][i]["applied"] = edited_df[i]["applied"]
-
-    save_progress = st.button("Save Progress")
-    if save_progress:
-        db.update(st.session_state['df'])
     
 
 if __name__ == '__main__':

@@ -9,7 +9,9 @@ db = Database()
 def main():
 
     st.title("Applied Jobs")
-
+    st.write("My completed applications")
+    st.text("")
+    st.text("")
     df = db.get_processed(applied=True)
 
     st.data_editor(df,
