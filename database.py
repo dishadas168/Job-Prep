@@ -3,6 +3,7 @@ import uuid
 import config
 from pathlib import Path
 from utils import *
+import os
 
 class Database:
     def __init__(self):

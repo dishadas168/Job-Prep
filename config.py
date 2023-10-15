@@ -1,4 +1,5 @@
 import dotenv
+import os
 
 config_env = dotenv.dotenv_values(".env")
 
