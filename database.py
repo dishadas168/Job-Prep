@@ -13,6 +13,9 @@ class Database:
         self.raw_jobs_collection = self.db["raw_jobs"]
         self.processed_jobs_collection = self.db["processed_jobs"]
         self.search_collection = self.db["search"]
+    
+    def get_client(self):
+        return self.db
 
 
     def store_search_id(self, search_id, positions, location):
