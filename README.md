@@ -43,8 +43,8 @@ In the "Generate Cover Letter" section, users can create a customized cover lett
 4. Execute the following code to get started.
 ```shell
 cp .env.example .env
-pip install -r requirements.txt
-streamlit run app.py
+docker build -t job-prep .
+docker run -d --env-file .env -p 8501:8501 job-prep
 ```
 
 ## License
