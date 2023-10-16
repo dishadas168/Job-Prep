@@ -45,4 +45,3 @@ jobs:
         with:
           push: true
           tags: latest, ${{ github.run_number }}
-          labels: ${{ steps.meta.outputs.labels }}
