@@ -4,35 +4,50 @@ import config
 from pathlib import Path
 from utils import *
 import os
+import logging
+
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s - %(lineno)d")
 
 class Database:
     def __init__(self):
-        self.client = pymongo.MongoClient(config.mongodb_uri)
-        self.db = self.client["job-prep"]
-        self.resume_collection = self.db["resumes"]
-        self.raw_jobs_collection = self.db["raw_jobs"]
-        self.processed_jobs_collection = self.db["processed_jobs"]
-        self.search_collection = self.db["search"]
+        try:
+            self.client = pymongo.MongoClient(config.mongodb_uri)
+            self.db = self.client["job-prep"]
+            self.resume_collection = self.db["resumes"]
+            self.raw_jobs_collection = self.db["raw_jobs"]
+            self.processed_jobs_collection = self.db["processed_jobs"]
+            self.search_collection = self.db["search"]
+        except Exception as e:
+            logging.error("An error occurred while fetching MongoDB client: %s", str(e))
     
     def get_client(self):
         return self.db
 
-
     def store_search_id(self, search_id, positions, location):
-        self.search_collection.insert_one({
-            "_id" : search_id,
-            "positions" : positions,
-            "location"  : location
-        })
+        try:
+            self.search_collection.insert_one({
+                "_id" : search_id,
+                "positions" : positions,
+                "location"  : location
+            })
+        except Exception as e:
+            logging.error("An error occurred while inserting search data: %s", str(e))
 
     #TODO: Modify to store unique values only
     def store_raw(self, jsonlist):
-        self.raw_jobs_collection.delete_many({})
-        self.raw_jobs_collection.insert_many(jsonlist)
+        try:
+            self.raw_jobs_collection.delete_many({})
+            self.raw_jobs_collection.insert_many(jsonlist)
+        except Exception as e:
+            logging.error("An error occurred while inserting raw data: %s", str(e))
+
 
     def store_processed(self, jsonlist):
-        self.processed_jobs_collection.delete_many({})
-        self.processed_jobs_collection.insert_many(jsonlist)
+        try:
+            self.processed_jobs_collection.delete_many({})
+            self.processed_jobs_collection.insert_many(jsonlist)
+        except Exception as e:
+            logging.error("An error occurred while inserting processed data: %s", str(e))
 
 
     def check_if_resume_exists(self):
@@ -54,7 +69,6 @@ class Database:
             "content": chunks})
 
 
-    
     def get_resume(self):
         if self.check_if_resume_exists():
             return self.resume_collection.find_one({"type": "resume"})

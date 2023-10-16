@@ -31,9 +31,8 @@ def main():
     if display:
         with st.spinner('Fetching data...'):
             df = db.get_processed()
-            st.write(len(df))
             st.session_state['df'] = df
-
+            
     if save_progress:
         with st.spinner('Saving...'):
             db.update(st.session_state['df'])

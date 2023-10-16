@@ -4,6 +4,9 @@ import urllib.request
 from bs4 import BeautifulSoup
 import time
 import re
+import logging
+
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s - %(lineno)d")
 
 db = Database()
 
@@ -24,14 +27,12 @@ def modify_fields(data):
     return data
 
 
-
 def extract_description(data):
 
     for job in data:
         job_url = job.get("job_url")
         if job_url:
             try:
-                # print(job_url)
                 html = urllib.request.urlopen(job_url).read()
                 soup = BeautifulSoup(html, features="html.parser")
 
@@ -45,11 +46,13 @@ def extract_description(data):
                 job["description"] = text
             except Exception as e:
                 job["description"] = ""
+                logging.error("An error occurred while scraping %s: %s", job_url, str(e))
         else:
             job["description"] = ""
         time.sleep(0.5)
 
     return data
+
 
 def extract_salaries(data):
 
@@ -115,17 +118,27 @@ def extract_salaries(data):
     
     return data
 
-# def resume_similarity(data):
 
 def process_data():
 
-    resume = db.get_resume()
-
     data = db.get_raw()
-    data = modify_fields(data)
-    data = extract_description(data)
-    data = extract_salaries(data)
-    # data = resume_similarity(data, resume)
-    db.store_processed(data)
 
-process_data()
+    if data is not None:
+
+        logging.info("Modifying fields...")
+        data = modify_fields(data)
+
+        logging.info("Extracting descriptions...")
+        data = extract_description(data)
+
+        logging.info("Extracting salaries...")
+        data = extract_salaries(data)
+
+        logging.info("Storing processed data...")
+        db.store_processed(data)
+
+        logging.info("Processing data finished.")
+
+    else:
+        logging.warning("No data was processed.")
+

@@ -11,6 +11,9 @@ from langchain.chains.summarize import load_summarize_chain
 import docx 
 from docx.shared import Pt 
 import re
+import logging
+
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s - %(lineno)d")
 
 db = Database()
 
@@ -29,50 +32,59 @@ def main():
         else:
             with st.spinner('Generating cover letter...'):
 
-                text_splitter = CharacterTextSplitter()
-                texts = text_splitter.split_text(job_desc)
-                docs = [Document(page_content=t) for t in texts]
+                logging.info("Generating cover letter...")
+                try:
+                    text_splitter = CharacterTextSplitter()
+                    texts = text_splitter.split_text(job_desc)
+                    docs = [Document(page_content=t) for t in texts]
 
-                # Define prompt
-                prompt_template = f"""
-                You are given my resume, my background information and a job description. 
-                Based on the details provided in the job description below, align my pertinent 
-                skills and experience with the specific language and requirements outlined in 
-                the job description to create a cover letter. This approach should enhance the 
-                likelihood of being considered a strong candidate for the position. 
-            
-                RESUME:
-                {resume_text["content"]}
+                    # Define prompt
+                    prompt_template = f"""
+                    You are given my resume, my background information and a job description. 
+                    Based on the details provided in the job description below, align my pertinent 
+                    skills and experience with the specific language and requirements outlined in 
+                    the job description to create a cover letter. This approach should enhance the 
+                    likelihood of being considered a strong candidate for the position. 
+                
+                    RESUME:
+                    {resume_text["content"]}
 
-                BACKGROUND INFORMATION:
-                {extra_info}
+                    BACKGROUND INFORMATION:
+                    {extra_info}
 
-                """ + "\n\nJOB DESCRIPTION: \n\n{job_desc}"
+                    """ + "\n\nJOB DESCRIPTION: \n\n{job_desc}"
 
-                prompt = PromptTemplate.from_template(prompt_template)
+                    prompt = PromptTemplate.from_template(prompt_template)
 
-                # Define LLM chain
-                llm = ChatOpenAI(openai_api_key=config.openai_api_key, temperature=0, model_name="gpt-3.5-turbo-16k")
-                llm_chain = LLMChain(llm=llm, prompt=prompt)
+                    # Define LLM chain
+                    llm = ChatOpenAI(openai_api_key=config.openai_api_key, temperature=0, model_name="gpt-3.5-turbo-16k")
+                    llm_chain = LLMChain(llm=llm, prompt=prompt)
 
-                # Define StuffDocumentsChain
-                stuff_chain = StuffDocumentsChain(
-                    llm_chain=llm_chain,
-                    document_variable_name="job_desc"
-                )
+                    # Define StuffDocumentsChain
+                    stuff_chain = StuffDocumentsChain(
+                        llm_chain=llm_chain,
+                        document_variable_name="job_desc"
+                    )
 
-                output = stuff_chain.run(docs)
+                    output = stuff_chain.run(docs)
 
-                st.write(output)
-            
-                # Create an instance of a word document 
-                doc = docx.Document() 
-                output = re.sub(u'[^\u0020-\uD7FF\u0009\u000A\u000D\uE000-\uFFFD\U00010000-\U0010FFFF]+', '', output)
-                doc.add_paragraph(output) 
-                doc.save('cover_letter.docx')
+                    st.write(output)
+                except Exception as e:
+                    logging.error("An error occurred while generating cover letter : %s", str(e))
 
-                with open('cover_letter.docx', 'rb') as f:
-                    st.download_button('Download as Docx', f, file_name='cover_letter.docx')
+                try:
+                    # Create an instance of a word document 
+                    logging.info("Converting to DOCX...")
+                    doc = docx.Document() 
+                    output = re.sub(u'[^\u0020-\uD7FF\u0009\u000A\u000D\uE000-\uFFFD\U00010000-\U0010FFFF]+', '', output)
+                    doc.add_paragraph(output) 
+                    doc.save('cover_letter.docx')
+
+                    with open('cover_letter.docx', 'rb') as f:
+                        st.download_button('Download as Docx', f, file_name='cover_letter.docx')
+                except Exception as e:
+                    logging.error("An error occurred while generating DOCX file : %s", str(e))
+
     
 if __name__ == '__main__':
     main()

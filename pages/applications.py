@@ -1,13 +1,16 @@
 import streamlit as st
 from database import Database
-from extract import extract_data
-from transform import process_data
+import logging
+
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s - %(lineno)d")
 
 db = Database()
 
 
 def main():
 
+    logging.info("Displaying Applications...")
+    
     st.title("Applied Jobs")
     st.write("My completed applications")
     st.text("")
