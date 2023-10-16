@@ -24,7 +24,7 @@ jobs:
 
   build-container:
     name: Build Docker container image
-    needs: Test
+    needs: run-tests
     runs-on: ubuntu-latest
     steps:
       - name: Publish to Docker Hub
