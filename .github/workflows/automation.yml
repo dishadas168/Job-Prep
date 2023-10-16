@@ -15,12 +15,13 @@ jobs:
         run: |
           echo "${{ secrets.ENV_FILE }}" > .env
       
-      - name: Build docker image
+      - name: Build docker image and run
         run: |
           docker build -t job-prep .
+          docker run -d --env-file .env -p 8501:8501 job-prep
 
       - name: Run tests inside docker container
-        run: docker run -it job-prep pytest
+        run: docker exec job-prep pytest
 
   build-container:
     name: Build Docker container image
