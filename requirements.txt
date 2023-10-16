@@ -8,3 +8,4 @@ pypdf
 st-pages
 pymongo
 python-docx
+pytest
