@@ -33,12 +33,12 @@ jobs:
 
       - name: Install dependencies
         run: python -m pip install pytest pymongo python-dotenv
+      
+      - name: Create env file
+        run: |
+          echo "${{ secrets.ENV_FILE }}" > .env
 
       - name: Run tests
-        env:
-          MONGODB_URI: ${{ secrets.MONGODB_URI }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          RAPID_API_KEY: ${{ secrets.RAPID_API_KEY }}
         run: pytest
 
   build-container:
