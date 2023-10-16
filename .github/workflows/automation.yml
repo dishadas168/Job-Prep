@@ -32,7 +32,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install dependencies
-        run: python -m pip install pytest pymongo dotenv
+        run: python -m pip install pytest pymongo python-dotenv
 
       - name: Run tests
         env:
