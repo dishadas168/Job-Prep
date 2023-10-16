@@ -18,10 +18,10 @@ jobs:
       - name: Build docker image and run
         run: |
           docker build -t job-prep .
-          docker run -d --env-file .env -p 8501:8501 job-prep-container job-prep
+          docker run --name job-prep -d --env-file .env -p 8501:8501 job-prep
 
       - name: Run tests inside docker container
-        run: docker exec job-prep-container pytest
+        run: docker exec job-prep pytest
 
   build-container:
     name: Build Docker container image
