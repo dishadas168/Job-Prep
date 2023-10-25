@@ -1,7 +1,6 @@
 
 # Job Preparation Application
 
-![GitHub Actions](https://github.com/dishadas168/Job-Prep/actions/workflows/automation.yml/badge.svg)
 
 
 ## Overview
