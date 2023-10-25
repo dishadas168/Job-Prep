@@ -6,11 +6,9 @@
 ![OpenAI GPT-3.5](https://img.shields.io/badge/OpenAI%20GPT-3.5-brightgreen)
 ![MongoDB Atlas](https://img.shields.io/badge/MongoDB%20Atlas-6.0-brightgreen)
 
-## Overview
 
 This Job Preparation Application is designed to streamline the job search and application process. It offers six distinct sections to help users manage their job search effectively.
 
-## Architecture
 
 ![jon_prep_architecture](./resources/job_prep_architecture.JPG)
 
