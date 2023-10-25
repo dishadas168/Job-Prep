@@ -1,6 +1,9 @@
 
 # Job Preparation Application
 
+![GitHub Actions](https://github.com/dishadas168/Job-Prep/actions/workflows/automation.yml/badge.svg)
+
+
 ## Overview
 
 This Job Preparation Application is designed to streamline the job search and application process. It offers six distinct sections to help users manage their job search effectively.
