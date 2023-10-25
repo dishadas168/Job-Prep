@@ -1,4 +1,4 @@
-name: Test and Dockerize Job-Prep application
+name: Test and Dockerize App
 on: 
   push:
     branches:
