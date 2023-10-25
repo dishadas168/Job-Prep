@@ -5,6 +5,11 @@
 
 This Job Preparation Application is designed to streamline the job search and application process. It offers six distinct sections to help users manage their job search effectively.
 
+## Architecture
+
+![jon_prep_architecture](./resources/job_prep_architecture.JPG)
+
+
 ## Features
 
 
@@ -19,14 +24,15 @@ In the "Upload Resume" section, users can upload their resume in PDF format. The
 ### 2. Search Jobs
 The "Search Jobs" section allows users to specify desired job roles and locations. The application utilizes a LinkedIn API to extract job descriptions, URLs, job details, and salary information. The results are displayed in a table format, and users can mark their application status with checkboxes, which are also saved to the database.
 
-### 3. Applications
-In the "Applications" section, users can view the jobs they've applied for. This provides a convenient overview of their job application history.
-
-### 4. Generate Resume
+### 3. Generate Resume
 The "Generate Resume" section lets users customize their resume according to the job description. Users simply paste the job description, click submit, and receive a tailored resume in DOCX format. This document can be downloaded and edited as needed.
 
-### 5. Generate Cover Letter
+### 4. Generate Cover Letter
 In the "Generate Cover Letter" section, users can create a customized cover letter based on the job description. The application generates a cover letter in DOCX format, which users can download and further customize.
+
+### 5. Applications
+In the "Applications" section, users can view the jobs they've applied for. This provides a convenient overview of their job application history.
+
 
 ## Technologies Used
 
@@ -46,6 +52,14 @@ cp .env.example .env
 docker build -t job-prep .
 docker run -d --env-file .env -p 8501:8501 job-prep
 ```
+
+## Roadmap
+
+- Implement user authentication
+- Save job data for each search ID to reduce redundant API calls
+- Add dropdown for Search IDs on the Search Jobs Page
+- Add Dashboard page for job market insights for current Search ID
+
 
 ## License
 
