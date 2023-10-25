@@ -1,4 +1,4 @@
-name: Test and Dockerize App
+name: build
 on: 
   push:
     branches:
