@@ -1,7 +1,7 @@
 
 # Job Preparation Application
 
-
+![CI Pipeline](https://github.com/dishadas168/Job-Prep/actions/workflows/automation.yml/badge.svg)
 
 ## Overview
 
