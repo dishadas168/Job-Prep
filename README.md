@@ -2,6 +2,9 @@
 # Job Preparation Application
 
 ![CI Pipeline](https://github.com/dishadas168/Job-Prep/actions/workflows/automation.yml/badge.svg)
+![Streamlit Version](https://img.shields.io/badge/Streamlit-1.27.2-brightgreen)
+![OpenAI GPT-3.5](https://img.shields.io/badge/OpenAI%20GPT-3.5-brightgreen)
+![MongoDB Atlas](https://img.shields.io/badge/MongoDB%20Atlas-6.0-brightgreen)
 
 ## Overview
 
