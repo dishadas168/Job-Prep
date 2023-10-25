@@ -65,4 +65,4 @@ docker run -d --env-file .env -p 8501:8501 job-prep
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License
